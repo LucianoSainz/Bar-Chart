@@ -3,7 +3,7 @@ let req = new XMLHttpRequest();
 
 
 let data 
-let values = [];
+let values = []
 
 let heightScale 
 let xScale 
@@ -22,8 +22,34 @@ let drawCanvas = () => {
 }
 
 let generateScales = () => {
+  
+    heightScale = d3.scaleLinear()
+                    .domain([0,d3.max(values, (item) => {
+                        return item[1]
+                    })])
+                     .range([0, height - (2*padding)])
 
-}
+
+          xScale = d3.scaleLinear()
+                    .domain([0, values.length -1])
+                    .range([padding, width - padding])
+
+          let datesArray = values.map((item) => {
+              return new Date(item[0])
+          })
+
+          xAxisScale = d3.scaleTime()
+                         .domain([d3.min(datesArray), d3.max(datesArray)])
+                         .range([padding, width - padding])
+
+           yAxisScale = d3.scaleLinear()
+                          .domain([0, d3.max(values, (item) => {
+                           return item[1]
+                          })])
+                          .range([height - padding, padding)
+ 
+
+                }
 
 let drawBars = () => {
 
@@ -36,5 +62,10 @@ let generateAxes = () => {
 req.open('GET', url, true)
 req.onload = () => {
     data = JSON.parse(req.responseText)
+    values = data.data
+    drawCanvas()
+    generateScales()
+    drawBars()
+    generateAxes()
 }
 req.send()

@@ -3,8 +3,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #fcf5e9;
 }
 
 svg {
-   background-color:#f3d9a5;
+   background-color:#fff;
 }
