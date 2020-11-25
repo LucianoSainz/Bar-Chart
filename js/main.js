@@ -46,7 +46,7 @@ let generateScales = () => {
                           .domain([0, d3.max(values, (item) => {
                            return item[1]
                           })])
-                          .range([height - padding, padding)
+                          .range([height - padding, padding])
  
 
                 }
@@ -56,7 +56,12 @@ let drawBars = () => {
 }
 
 let generateAxes = () => {
+   
+    let xAxis = d3.axisBottom(xAxisScale)
 
+    svg.append('g')
+        .call(xAxis)
+        .attr('id', 'x-axis')
 }
 
 req.open('GET', url, true)
